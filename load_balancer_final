@@ -17,10 +17,6 @@ Architecture Includes:
 import computer1, computer2, computer3, computer4
 from random import randint
 
-##Lists of varying lengths to test your function:
-#SERVERS = ['APP_server1', 'APP_server2', 'APP_server3']
-
-#SERVERS = [computer1, computer2, computer3]
 SERVERS = [computer1, computer2, computer3, computer4]
 
 ##Load Balancer algorithm:
