@@ -1,0 +1,58 @@
+"""
+Service: The Russian Peasant's Algorithm
+Architecture Includes:
+
+- APP Computers (imported modules)
+- Database --> fake_database which is the Russian Peasant algorithm
+- Load Balancer algorithm
+
++-----+   +-----+   +-----+
+| APP |   | APP |   | APP |
+|  1  |   |  2  |   |  3  |
++-----+   +-----+   +-----+
+
+"""
+## IMPORT SERVERS (modules)
+
+import computer1, computer2, computer3, computer4
+from random import randint
+
+##Lists of varying lengths to test your function:
+#SERVERS = ['APP_server1', 'APP_server2', 'APP_server3']
+
+#SERVERS = [computer1, computer2, computer3]
+SERVERS = [computer1, computer2, computer3, computer4]
+
+##Load Balancer algorithm:
+x = len(SERVERS)
+y = x + 1
+s_list = SERVERS
+
+def get_server():
+    global x, y, s_list
+    if y > 1:
+        y -= 1
+        return s_list[x - y]
+    elif y == 1:
+        s_list = SERVERS
+        y = x
+        return s_list[x - y]
+
+##Testing Load which needs balancing
+if __name__ == '__main__':
+    ##simulate a number of requests:
+    for i in range(21):
+        ##generate some requested numbers
+        a = randint(5,99)
+        b = randint(5,99)
+        ##Run the load balancer algorithm to get us a computer
+        server = get_server()
+        # ##Now print the results:
+        print(server.__name__)
+        print(server.multiplyHandler(a,b))
+        print()
+
+##Testing the function
+# if __name__ == '__main__':
+#     for i in range(9):
+#         print(get_server())
