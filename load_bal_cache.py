@@ -20,12 +20,14 @@ import computer1
 import computer2
 import computer3
 import computer4
-
+from memcache import Memcache
+cache = Memcache()
 
 ##Lists of varying lengths to test your function:
 #SERVERS = ['APP_server1', 'APP_server2', 'APP_server3']
 
 SERVERS = [computer1, computer2, computer3, computer4]
+# SERVERS = [computer1]
 
 ##Load Balancer algorithm:
 x = len(SERVERS)
@@ -50,11 +52,21 @@ if __name__ == '__main__':
         z = randint(1,21)
         a = [18,21,33,55,66,77,71][z%7]
         b = [12,14,37,44,81,123,99][z%7]
-
+        # a = 12
+        # b = 21
+        key = (a,b)
         ##Run the load balancer algorithm to get us a computer
         server = get_server()
-        # ##Now print the results:
-        print(server.__name__)
-        print(server.multiplyHandler(a,b))
-        print()
+        if key in cache.CACHE:
+            print(server.__name__)
+            print("***Used Cache***")
+            value = (cache.CACHE[key])
+            quanswer = ("{0}x{1} = {2}".format(a, b, value))
+            print(server.lastMultipliedHandler(quanswer, value))
+            print()
+        else:
+            # ##Now print the results:
+            print(server.__name__)
+            print(server.multiplyHandler(a,b))
+            print()
 

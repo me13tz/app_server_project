@@ -9,8 +9,5 @@ def russian(a,b):
         y = y << 1   ##binary shift to the left to multiply by 2
     return z
 
-# a = 357
-# b = 77
-
 if __name__ == "__main__":
     russian(a,b)

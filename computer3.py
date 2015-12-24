@@ -31,13 +31,8 @@ def lastMultipliedHandler(quanswer, value):
 def multiplyHandler(a, b):
     value = fake_database.russian(a, b)
     key = (a,b)
-    if key in cache.CACHE:
-        print("Used Cache")
-        quanswer = ("{0}x{1} = {2}".format(a, b, value))
-        return lastMultipliedHandler(quanswer, value)
-    else:
-        cache.set(key,value)
     quanswer = ("{0}x{1} = {2}".format(a, b, value))
+    cache.set(key,value)
     return lastMultipliedHandler(quanswer, value)
 
 
