@@ -14,8 +14,16 @@ Architecture Includes:
 """
 ## IMPORT SERVERS (modules)
 
-import computer1, computer2, computer3, computer4
 from random import randint
+
+import computer1
+import computer2
+import computer3
+import computer4
+
+
+##Lists of varying lengths to test your function:
+#SERVERS = ['APP_server1', 'APP_server2', 'APP_server3']
 
 SERVERS = [computer1, computer2, computer3, computer4]
 
@@ -38,9 +46,11 @@ def get_server():
 if __name__ == '__main__':
     ##simulate a number of requests:
     for i in range(21):
-        ##generate some requested numbers
-        a = randint(5,99)
-        b = randint(5,99)
+        ##generate some requested numbers that will hit the cache from time to time:
+        z = randint(1,21)
+        a = [18,21,33,55,66,77,71][z%7]
+        b = [12,14,37,44,81,123,99][z%7]
+
         ##Run the load balancer algorithm to get us a computer
         server = get_server()
         # ##Now print the results:
@@ -48,7 +58,3 @@ if __name__ == '__main__':
         print(server.multiplyHandler(a,b))
         print()
 
-##Testing the function
-# if __name__ == '__main__':
-#     for i in range(9):
-#         print(get_server())

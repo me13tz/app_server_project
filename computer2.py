@@ -1,10 +1,12 @@
 import fake_database
+from memcache import Memcache
 
 
 def printName():
     print(str(__name__))
 
 qlist = []
+cache = Memcache()
 
 def lastMultipliedHandler(quanswer, value):
     """keep appending qlist until you have 5, then delete the 1st element and append the latest one at the end, in order
@@ -14,12 +16,10 @@ def lastMultipliedHandler(quanswer, value):
         print("Last result:", value)
         return qlist
     elif len(qlist) == 5:
-        #once we get to five, add the Last Five label
         print("Last result:", value)
         r = "Last five: {}".format(qlist)
         return r
     elif len(qlist) > 5:
-        #above five, nix the first element and append the list with the latest request
         qlist.reverse()
         qlist.pop()
         qlist.reverse()
@@ -29,8 +29,14 @@ def lastMultipliedHandler(quanswer, value):
 
 
 def multiplyHandler(a, b):
-    #call the Russian Peasant - he wants to hear from you!
     value = fake_database.russian(a, b)
+    key = (a,b)
+    if key in cache.CACHE:
+        print("Used Cache")
+        quanswer = ("{0}x{1} = {2}".format(a, b, value))
+        return lastMultipliedHandler(quanswer, value)
+    else:
+        cache.set(key,value)
     quanswer = ("{0}x{1} = {2}".format(a, b, value))
     return lastMultipliedHandler(quanswer, value)
 
